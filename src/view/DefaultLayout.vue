@@ -1,11 +1,11 @@
 <script setup>
-    import NavigationBar from "@/components/NavigationBar.vue";
+import NavigationBar from '@/components/NavigationBar.vue';
 </script>
 
 <template>
-    <NavigationBar/>
+    <NavigationBar />
     <main>
-        <div class="max-w-[800px] mx-auto w-auto">
+        <div class="max-w-[800px] mx-auto w-full py-8">
             <router-view></router-view>
         </div>
     </main>
