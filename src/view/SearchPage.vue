@@ -13,6 +13,7 @@ const search = () => {
             @input="search"
             type="text"
             class="w-full p-2 border border-gray-300 rounded-md"
-            placeholder="Search for a meal..." />
+            placeholder="Search for a meal..."
+        />
     </div>
 </template>

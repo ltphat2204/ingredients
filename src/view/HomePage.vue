@@ -59,9 +59,12 @@ onMounted(fetchMeals);
                     :tag="meal.strTags"
                 />
             </div>
-            <div @click="fetchMeals" class="px-4 py-2 bg-rose-900 w-fit text-rose-50 rounded flex items-center cursor-pointer hover:bg-rose-300">
+            <div
+                @click="fetchMeals"
+                class="px-4 py-2 bg-rose-900 w-fit text-rose-50 rounded flex items-center cursor-pointer hover:bg-rose-300"
+            >
                 Regenerate
-                <LoadingIcon class="w-4 h-4 fill-rose-50 ml-2"/>
+                <LoadingIcon class="w-4 h-4 fill-rose-50 ml-2" />
             </div>
         </div>
     </div>

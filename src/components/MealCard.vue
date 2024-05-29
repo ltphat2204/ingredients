@@ -1,5 +1,5 @@
 <script setup>
-    const props = defineProps(['id', 'image', 'title', 'description', 'tag']);
+const props = defineProps(['id', 'image', 'title', 'description', 'tag']);
 </script>
 
 <template>
@@ -11,7 +11,11 @@
             <h5 class="text-lg font-bold text-rose-500">{{ props.title }}</h5>
             <div class="limit-3 text-justify text-xs text-rose-900">{{ props.description }}</div>
             <div class="text-xs text-rose-100 font-medium flex flex-wrap mt-1">
-                <div class="p-1 bg-rose-900 rounded mt-1 mr-1" v-for="(tag, index) in props.tag?.split(',')" :key="index">
+                <div
+                    class="p-1 bg-rose-900 rounded mt-1 mr-1"
+                    v-for="(tag, index) in props.tag?.split(',')"
+                    :key="index"
+                >
                     {{ tag }}
                 </div>
             </div>

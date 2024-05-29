@@ -10,18 +10,24 @@ const loading = ref(false);
 const meal = ref(null);
 const error = ref(null);
 
-watch(() => route.params.id, (id) => {
-    if (id) {
-        fetchData(id);
-    }
-}, { immediate: true });
+watch(
+    () => route.params.id,
+    (id) => {
+        if (id) {
+            fetchData(id);
+        }
+    },
+    { immediate: true }
+);
 
 async function fetchData(id) {
     error.value = meal.value = null;
     loading.value = true;
 
     try {
-        const response = await axios.get(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
+        const response = await axios.get(
+            `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`
+        );
         const data = response.data;
         meal.value = data.meals[0];
     } catch (err) {
@@ -58,7 +64,10 @@ const ingredients = computed(() => {
             <p><b>Area:</b> {{ meal.strArea }}</p>
             <p><b>Category:</b> {{ meal.strCategory }}</p>
         </div>
-        <img class="aspect-video object-cover w-full object-center rounded mt-4 mb-8" :src="meal.strMealThumb" />
+        <img
+            class="aspect-video object-cover w-full object-center rounded mt-4 mb-8"
+            :src="meal.strMealThumb"
+        />
         <section class="py-4 border-b border-rose-100">
             <h3 class="font-semibold text-2xl text-rose-500 mb-2">Ingredients</h3>
             <div class="grid grid-cols-2 gap-2">
@@ -88,7 +97,8 @@ const ingredients = computed(() => {
                     :src="`https://www.youtube.com/embed/${getYoutubeVideoId(meal.strYoutube)}`"
                     frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen>
+                    allowfullscreen
+                >
                 </iframe>
             </div>
             <p v-else>No video available.</p>
@@ -100,6 +110,6 @@ const ingredients = computed(() => {
 function getYoutubeVideoId(url) {
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
     const match = url.match(regExp);
-    return (match && match[2].length === 11) ? match[2] : null;
+    return match && match[2].length === 11 ? match[2] : null;
 }
 </script>
