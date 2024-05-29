@@ -12,6 +12,7 @@ const NUMBER_MEALS = 5;
 const fetchMeals = async () => {
     loading.value = true;
     err.value = null;
+    meals.value = null;
     try {
         for (let i = 0; i < NUMBER_MEALS; i++) {
             const response = await axios.get('https://www.themealdb.com/api/json/v1/1/random.php');
@@ -45,17 +46,23 @@ onMounted(fetchMeals);
         <div v-else-if="err" class="text-2xl text-center font-bold text-rose-500">
             Oh no, something is wrong in somewhere!!!
         </div>
-        <div v-else class="flex flex-col md:flex-row flex-wrap">
-            <MealCard
-                class="md:basis-1/2"
-                v-for="meal in meals"
-                :key="meal.idMeal"
-                :id="meal.idMeal"
-                :image="meal.strMealThumb"
-                :title="meal.strMeal"
-                :description="meal.strInstructions"
-                :tag="meal.strTags"
-            />
+        <div v-else>
+            <div class="flex flex-col md:flex-row flex-wrap">
+                <MealCard
+                    class="md:basis-1/2"
+                    v-for="meal in meals"
+                    :key="meal.idMeal"
+                    :id="meal.idMeal"
+                    :image="meal.strMealThumb"
+                    :title="meal.strMeal"
+                    :description="meal.strInstructions"
+                    :tag="meal.strTags"
+                />
+            </div>
+            <div @click="fetchMeals" class="px-4 py-2 bg-rose-900 w-fit text-rose-50 rounded flex items-center cursor-pointer hover:bg-rose-300">
+                Regenerate
+                <LoadingIcon class="w-4 h-4 fill-rose-50 ml-2"/>
+            </div>
         </div>
     </div>
 </template>
