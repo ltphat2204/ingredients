@@ -21,9 +21,12 @@ const debounce = () => {
     clearTimeout(searchDebounce.value);
 
     searchDebounce.value = setTimeout(async () => {
-        router.push({ name: 'search', query: { search: searchTerm.value, category: selectedCategory.value } });
+        router.push({
+            name: 'search',
+            query: { search: searchTerm.value, category: selectedCategory.value }
+        });
     }, 500);
-}
+};
 
 const searchTerm = ref('');
 const search = () => {
@@ -40,25 +43,34 @@ const setCategory = (category) => {
 const getCategory = async () => {
     const response = await axios.get('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
     const data = response.data;
-    categories.value = data.meals.map(meal => ({
+    categories.value = data.meals.map((meal) => ({
         value: meal.strCategory,
-        text: meal.strCategory,
+        text: meal.strCategory
     }));
     categories.value = [...categories.value, { value: '', text: 'All Categories' }];
-    selectedCategory.value = categories.value.find(category => category.value === router.currentRoute.value.query.category)?.value || '';
+    selectedCategory.value =
+        categories.value.find(
+            (category) => category.value === router.currentRoute.value.query.category
+        )?.value || '';
 };
 
 const getMeals = async () => {
     loading.value = true;
     try {
-        let response = await axios.get(`https://www.themealdb.com/api/json/v1/1/search.php?s=${searchTerm.value}`);
+        let response = await axios.get(
+            `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchTerm.value}`
+        );
         const data = response.data.meals;
 
-        response = await axios.get(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${selectedCategory.value}`);
+        response = await axios.get(
+            `https://www.themealdb.com/api/json/v1/1/filter.php?c=${selectedCategory.value}`
+        );
         const categoriesData = response.data.meals;
 
         if (categoriesData) {
-            meals.value = data.filter(meal => categoriesData.some(category => category.strMeal === meal.strMeal));
+            meals.value = data.filter((meal) =>
+                categoriesData.some((category) => category.strMeal === meal.strMeal)
+            );
         } else {
             meals.value = data;
         }
@@ -67,7 +79,7 @@ const getMeals = async () => {
     } finally {
         loading.value = false;
     }
-}
+};
 
 onMounted(() => {
     getCategory();
@@ -75,10 +87,12 @@ onMounted(() => {
     getMeals();
 });
 
-watch(()=>router.currentRoute.value.query, () => {
-    getMeals();
-});
-
+watch(
+    () => router.currentRoute.value.query,
+    () => {
+        getMeals();
+    }
+);
 </script>
 
 <template>
@@ -93,9 +107,15 @@ watch(()=>router.currentRoute.value.query, () => {
                 id="search"
                 name="search"
             />
-            <SearchIcon class="w-6 h-6"/>
+            <SearchIcon class="w-6 h-6" />
         </div>
-        <DropdownSelection class="mt-4 ml-0 md:ml-4 md:mt-0" :options="categories" :selectedOption="selectedCategory" v-on:update:selectedOption="setCategory" :name="'category'"/>
+        <DropdownSelection
+            class="mt-4 ml-0 md:ml-4 md:mt-0"
+            :options="categories"
+            :selectedOption="selectedCategory"
+            v-on:update:selectedOption="setCategory"
+            :name="'category'"
+        />
     </form>
     <div class="mt-4">
         <div v-if="loading" class="w-full h-full flex justify-center">
@@ -104,7 +124,10 @@ watch(()=>router.currentRoute.value.query, () => {
         <div v-else-if="error" class="text-2xl text-center font-bold text-rose-500">
             Oh no, something is wrong in somewhere!!!
         </div>
-        <div v-else-if="meals === null || mealEmpty()" class="text-2xl text-center font-bold text-rose-900">
+        <div
+            v-else-if="meals === null || mealEmpty()"
+            class="text-2xl text-center font-bold text-rose-900"
+        >
             There is no meals to show
         </div>
         <div v-else>

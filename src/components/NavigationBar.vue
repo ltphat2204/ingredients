@@ -7,7 +7,7 @@ import { ref } from 'vue';
 const mobileNav = ref(false);
 const toggleMobileNav = () => {
     mobileNav.value = !mobileNav.value;
-}
+};
 
 onBeforeRouteUpdate(() => {
     mobileNav.value = false;
