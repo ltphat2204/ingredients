@@ -38,7 +38,7 @@ onMounted(fetchMeals);
 </script>
 
 <template>
-    <div class="px-4">
+    <div>
         <h3 class="text-xl font-bold text-rose-900 mb-4">Suggested for you:</h3>
         <div v-if="loading" class="w-full h-full flex justify-center">
             <LoadingIcon class="animate-spin h-8 w-8 self-center fill-rose-900" />

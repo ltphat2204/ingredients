@@ -1,12 +1,17 @@
 <script setup>
 import HamburgerIcon from '@/icons/HamburgerIcon.vue';
 import CrossIcon from '@/icons/CrossIcon.vue';
+import { onBeforeRouteUpdate } from 'vue-router';
 import { ref } from 'vue';
 
 const mobileNav = ref(false);
 const toggleMobileNav = () => {
     mobileNav.value = !mobileNav.value;
-};
+}
+
+onBeforeRouteUpdate(() => {
+    mobileNav.value = false;
+});
 </script>
 
 <template>
