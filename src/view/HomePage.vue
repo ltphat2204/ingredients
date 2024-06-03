@@ -7,7 +7,7 @@ import MealCard from '@/components/MealCard.vue';
 const loading = ref(false);
 const meals = ref(null);
 const err = ref(null);
-const NUMBER_MEALS = 5;
+const NUMBER_MEALS = 6;
 
 const fetchMeals = async () => {
     loading.value = true;
@@ -61,7 +61,7 @@ onMounted(fetchMeals);
             </div>
             <div
                 @click="fetchMeals"
-                class="px-4 py-2 bg-rose-900 w-fit text-rose-50 rounded flex items-center cursor-pointer hover:bg-rose-300"
+                class="px-4 py-2 mt-4 bg-rose-900 w-fit text-rose-50 rounded flex items-center cursor-pointer hover:bg-rose-300"
             >
                 Regenerate
                 <LoadingIcon class="w-4 h-4 fill-rose-50 ml-2" />
